@@ -74,4 +74,32 @@ msleep %>%
   select_if(~n_distinct(.) < 10)
   
   
+# re-ordering columns by the order in which you select() them
+msleep %>% 
+  select(conservation, sleep_total, name) %>% 
+  glimpse
+
+# use everything() to add remaining columns after you select some explicitely
+msleep %>% 
+  select(conservation, sleep_total, everything()) %>% 
+  glimpse
+
+# Column names
+# renaming columns using the select function
+msleep %>% 
+  select(animal = name, sleep_total, extinction_thread = conservation) %>% 
+  glimpse
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
 
