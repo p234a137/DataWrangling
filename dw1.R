@@ -42,10 +42,22 @@ msleep %>%
   select(matches("o.+er")) %>% 
   glimpse
 
+# selecting based on pre-identified columns
+classification <- c("name", "genus", "vore", "order", "conservation")
+
+msleep %>% 
+  select(!!classification)
 
 
+# select columns by their data type
+msleep %>% 
+  select_if(is.numeric) %>% 
+  glimpse
 
-
+# select_if with negation, but use ~ to make sure a function is passed as an argument
+msleep %>% 
+  select_if(~!is.numeric(.)) %>% 
+  glimpse
 
 
 
