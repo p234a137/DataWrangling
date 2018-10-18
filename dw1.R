@@ -60,12 +60,18 @@ msleep %>%
   glimpse
 
 
+# Selecting columns by logical expressions
+# the '~' creates a function out of mean, or you would heae to wrap it inside a funs() (func()?)
+msleep %>% 
+  select_if(is.numeric) %>% 
+  select_if(~mean(., na.rm=TRUE) > 10)
+# or shorter
+msleep %>%
+  select_if(~is.numeric(.) & mean(., na.rm=TRUE) > 10)
 
-  
-  
-  
-  
-  
+# count distinct values in a colum with n_distinct(). USe '~' for non-functions
+msleep %>% 
+  select_if(~n_distinct(.) < 10)
   
   
 
