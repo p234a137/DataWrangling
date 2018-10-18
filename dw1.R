@@ -11,12 +11,49 @@ glimpse(msleep)
 # Selecting columns
 msleep %>%
   select(name, genus, sleep_total, awake) %>%
-  glimpse()
+  glimpse
 
 # select chunks of columns by passing "ranges"
 msleep %>%
   select(name:order, sleep_total:sleep_cycle) %>%
   glimpse()
 
+# deselect columns or chunks columns by adding a '-' in front
+msleep %>% 
+  select(-conservation, -(sleep_total:awake)) %>%
+  glimpse
 
+# deselect a whole chunk but add back a column in the same select statement
+msleep %>%
+  select(-(name:awake), conservation) %>%
+  glimpse
+
+# select columns based on partial column names
+msleep %>% 
+  select(name, starts_with("sleep")) %>% 
+  glimpse
+
+msleep %>% 
+  select(contains("eep"), ends_with("wt")) %>% 
+  glimpse
+
+# select columns based on regex
+msleep %>% 
+  select(matches("o.+er")) %>% 
+  glimpse
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
 
