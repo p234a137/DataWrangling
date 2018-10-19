@@ -62,3 +62,88 @@ ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size =
   geom_point(alpha=0.5) +
   scale_x_log10()
 
+
+# change limits, breaks, etc
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.5) +
+  # clean the x-axis breaks
+  scale_x_log10(breaks = c(1, 10, 100, 1000, 10000),
+                limits = c(1, 120000))
+
+# change labels
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  # add scatter points
+  geom_point(alpha = 0.5) +
+  # log-scale the x-axis
+  scale_x_log10() +
+  # change labels
+  labs(title = "GDP versus life expectancy in 2007",
+       x = "GDP per capita (log scale)",
+       y = "Life expectancy",
+       size = "Popoulation",
+       color = "Continent")
+
+
+# change scale size variable
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  # add scatter points
+  geom_point(alpha = 0.5) +
+  # log-scale the x-axis
+  scale_x_log10() +
+  # change labels
+  labs(title = "GDP versus life expectancy in 2007",
+       x = "GDP per capita (log scale)",
+       y = "Life expectancy",
+       size = "Popoulation (millions)",
+       color = "Continent") +
+  # change the size scale
+  scale_size(range = c(0.1, 10),
+             breaks = 1000000 * c(250, 500, 750, 1000, 1250),
+             labels = c("250", "500", "750", "1000", "1250"))
+
+
+# Faceting: make plot for each individual continent
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  # add scatter points
+  geom_point(alpha = 0.5) +
+  # log-scale the x-axis
+  scale_x_log10() +
+  # change labels
+  labs(title = "GDP versus life expectancy in 2007",
+       x = "GDP per capita (log scale)",
+       y = "Life expectancy",
+       size = "Popoulation (millions)",
+       color = "Continent") +
+  # change the size scale
+  scale_size(range = c(0.1, 10),
+             breaks = 1000000 * c(250, 500, 750, 1000, 1250),
+             labels = c("250", "500", "750", "1000", "1250")) +
+  # add faceting
+  facet_wrap(~continent)
+  
+
+
+# Change Theme
+p <- ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  # add scatter points
+  geom_point(alpha = 0.5) +
+  # clean the axes names and breaks
+  scale_x_log10(breaks = c(1000, 10000),
+                limits = c(200, 120000)) +
+  # change labels
+  labs(title = "GDP versus life expectancy in 2007",
+       x = "GDP per capita (log scale)",
+       y = "Life expectancy",
+       size = "Popoulation (millions)",
+       color = "Continent") +
+  # change the size scale
+  scale_size(range = c(0.1, 10),
+             breaks = 1000000 * c(250, 500, 750, 1000, 1250),
+             labels = c("250", "500", "750", "1000", "1250")) +
+  # add a nicer theme
+  theme_classic(base_family = "Avenir")
+
+
+# save the plot
+ggsave("myplot.png", p, dpi = 300, width = 6, height = 4)
+
