@@ -57,5 +57,25 @@ msleep_corr <- msleep_ohno %>%
   mutate_all(str_trim)
 msleep_corr[,1:4]
 
+# mutate_if for cases when mutate_all is not enough
+# this will give an error because some of the data are strings
+msleep %>% 
+  mutate_all(round)
+
+# mutate_if works by checking first if data is numeric, then applying the function
+msleep %>%
+  select(name, sleep_total:bodywt) %>% 
+  mutate_if(is.numeric, round)
+
+# mutate_at on specific columns that are selected wit vars()
+msleep %>%
+  select(name, sleep_total:awake) %>% 
+  mutate_at(vars(contains("sleep")), ~(.*60))
+
+
+
+
+
+
 
 
