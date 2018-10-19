@@ -125,10 +125,3 @@ mtcars %>%
 mtcars %>% 
   tibble::rownames_to_column("car_model") %>% 
   head
-
-
-
-
-
-
-
