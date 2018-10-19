@@ -90,14 +90,43 @@ msleep %>%
   select(animal = name, sleep_total, extinction_thread = conservation) %>% 
   glimpse
   
+# keep all columns, use rename()
+msleep %>% 
+  rename(animal = name, extinction_threat = conservation) %>% 
+  glimpse
+
+# reformatting all column names using select_all() and a function
+msleep %>% 
+  select_all(toupper)
+
+# clean up names by adding a function on the fly
+#making an unclean database:
+msleep2 <- select(msleep, name, sleep_total, brainwt)
+colnames(msleep2) <- c("name", "sleep total", "brain weight")
+
+msleep2 %>% 
+  select_all(~str_replace(., " ", "_"))
   
+# remove question numbers 
+#making an unclean database:
+msleep2 <- select(msleep, name, sleep_total, brainwt)
+colnames(msleep2) <- c("Q1 name", "Q2 sleep total", "Q3 brain weight")
+msleep2[1:3,]
   
-  
-  
-  
-  
-  
-  
+msleep2 %>% 
+  select_all(~str_replace(., "Q[0-9]+", "")) %>% 
+  select_all(~str_replace(., " ", "_"))
+
+# rownames are not a column in itself, you can transform it into one
+# example mtcars models
+mtcars %>%
+  head
+
+mtcars %>% 
+  tibble::rownames_to_column("car_model") %>% 
+  head
+
+
 
 
 
