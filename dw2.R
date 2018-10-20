@@ -73,7 +73,39 @@ msleep %>%
   mutate_at(vars(contains("sleep")), ~(.*60))
 
 
+# change columns after mutation
+msleep %>% 
+  select(name, sleep_total:awake) %>% 
+  rename_at(vars(contains("sleep")), ~paste0(., "_min"))
 
+# if you use funs() instead, columns will be added rather than replaced
+msleep %>%
+  select(name, sleep_total:awake) %>%
+  mutate_at(vars(contains("sleep")), funs(min = .*60))
+
+
+# Discrete columns
+# recode() inside mutate().
+# .default refers to anything that isn't covered by the before groups with the exception of NA
+# .missing is used for changing NA to something else
+msleep %>%
+  mutate(conservation2 = recode(conservation,
+                                "en" = "Endangered",
+                                "lc" = "Least_Concern",
+                                "domesticated" = "Least_Concern",
+                                .default = "other")) %>% 
+  count(conservation2)
+
+# special version to return a factor: recode_factor()
+msleep %>% 
+  mutate(conservation2 = recode_factor(conservation,
+                                       "en" = "Endangered",
+                                       "lc" = "Least_Concern",
+                                       "domesticated" = "Least_Concern",
+                                       .default = "other",
+                                       .missing = "no data",
+                                       .ordered = TRUE)) %>% 
+  count(conservation2)
 
 
 
